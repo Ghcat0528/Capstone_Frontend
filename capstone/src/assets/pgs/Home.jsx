@@ -13,16 +13,21 @@ const Home = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
+        // Get user data, including reviews and following data
         const res = await axios.get("http://localhost:3808/api/users/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setUser(res.data);
-        setReviews(res.data.reviews || []);
-        setFollowing(res.data.following || []);
+        console.log("API Response:", res.data);
+
+        // Set both user data, reviews, and following
+        setUser(res.data); // Set the full user data correctly
+        setReviews(res.data.reviews || []); // Set the reviews correctly
+        setFollowing(res.data.following || []); // Set the following correctly
       } catch (error) {
         console.error(error);
       }
     };
+
     getUserData();
   }, []);
 
@@ -46,11 +51,7 @@ const Home = () => {
           <ul>
             {following.map((followedUser) => (
               <li key={followedUser.id} className="flex items-center space-x-4 my-2">
-                <img
-                  src={followedUser.profilePicture || "/default-pfp.png"}
-                  alt={`${followedUser.name}'s profile`}
-                  className="w-10 h-10 rounded-full"
-                />
+                
                 <Link to={`/users/${followedUser.id}`} className="text-blue-500 font-bold">
                   {followedUser.name}
                 </Link>
@@ -68,14 +69,25 @@ const Home = () => {
             <ul>
               {reviews.map((review) => (
                 <li key={review.id} className="border p-2 my-2">
-                  <strong>{review.game.title}</strong>: {review.content} (
-                  {review.rating}/10)
+                  <strong>{review.game ? review.game.title : 'Unknown Game'}</strong>: {review.content} ({review.rating}/10)
                 </li>
               ))}
             </ul>
           ) : (
             <p>No reviews yet.</p>
           )}
+        </div>
+      )}
+
+      {/* Go to My Profile Button */}
+      {user && (
+        <div className="mt-6">
+          <Link
+            to="/myuserpage"
+            className="px-4 py-2 text-white bg-blue-500 rounded"
+          >
+            Go to My Profile
+          </Link>
         </div>
       )}
 
@@ -88,5 +100,4 @@ const Home = () => {
     </div>
   );
 };
-
 export default Home;

@@ -1,48 +1,65 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
-
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Auth = () => {
-    const navigate = useNavigate();
-    const [isLogin, setLogin] = useState(true);
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: "",
+  const navigate = useNavigate();
+  const [isLogin, setLogin] = useState(true);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
 
-    });
-    const [ error, setError] = useState("");
+  const toggleForm = () => {
+    setLogin(!isLogin);
+    setFormData({ name: "", email: "", password: "" });
+    setError("");
+  };
 
-    const toggleForm = () => {
-        setLogin(!isLogin);
-        setFormData({name: "", email: "", password: ""});
-        setError("");
-    };
-    const handleChange = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value})
-    };
-    const handleSubmit =async (e) => {
-        e.preventDefault();
-        setError("");
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    console.log("Form data:", formData); // Log form data
+  
     try {
-        const endpoint = isLogin ? "http://localhost:3808/api/auth/login" : "http://localhost:3808/api/auth/register";
-    const { data } = await axios.post(endpoint, formData);
+      const endpoint = isLogin ? "http://localhost:3808/api/auth/login" : "http://localhost:3808/api/auth/register";
+      const { data } = await axios.post(endpoint, formData);
+  
+      if (isLogin) {
+       
+        localStorage.setItem("token", data.token);
+        alert("Login successful!");
+        
+        navigate('/');
+      } else {
+        // Handle register
+        alert("Signup successful!");
+        window.location.reload();
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 404 && isLogin) {
+          setError("User not found. Please create an account.");
+        } else if (error.response.status === 401 && isLogin) {
+          setError("Incorrect username or password.");
+        } else {
+          setError("An error occurred. Please try again.");
+        }
+      } else {
+        setError("An unexpected error occurred.");
+      }
+      console.error(error);
+    }
+  };
 
-    localStorage.setItem("token", data.token);
-    alert(isLogin ? "Login successful!" : "Signup successful!");
-
-    navigate("/");
-
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-return (
-<div className="flex justify-center items-center min-h-screen bg-gray-100">
+  return (
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
         <h2 className="text-2xl font-bold mb-4">{isLogin ? "Login" : "Register"}</h2>
 
@@ -95,6 +112,6 @@ return (
       </div>
     </div>
   );
-}
+};
 
-export default Auth
+export default Auth;

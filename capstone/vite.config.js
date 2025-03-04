@@ -7,5 +7,6 @@ export default defineConfig({
       '/api': 'https://capstone-backend-ax50.onrender.com', 
     },
     host: true, 
+    allowedHosts: ['capstone-frontend-wctm.onrender.com']
   },
 })

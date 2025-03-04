@@ -17,6 +17,7 @@ const MyUserPage = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [isAdmin, setIsAdmin] = useState(false); 
   const navigate = useNavigate();
+  const FRONT_URL = import.meta.env.VITE_FRONT_URL;
 
   useEffect(() => {
     const getLoggedInUser = async () => {
@@ -24,7 +25,7 @@ const MyUserPage = () => {
           const token = localStorage.getItem("token");
           if (!token) return;
           
-          const res = await axios.get("http://localhost:3808/api/users/profile", {
+          const res = await axios.get("${FRONT_URL}/api/users/profile", {
             headers: { Authorization: `Bearer ${token}` },
           });
     
@@ -54,7 +55,7 @@ const MyUserPage = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        `http://localhost:3808/api/users/${userId}/isFollowing`,
+        `${FRONT_URL}/api/users/${userId}/isFollowing`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setIsFollowing(res.data.isFollowing);

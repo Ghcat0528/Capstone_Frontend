@@ -8,11 +8,12 @@ const GamesPage = () => {
   const [games, setGames] = useState([]);
   const [categories, setCategories] = useState([]);
   const [activeFilters, setActiveFilters] = useState([]);
+  const FRONT_URL = import.meta.env.VITE_FRONT_URL;
 
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const categoriesRes = await axios.get('http://localhost:3808/api/reviews/categories');
+        const categoriesRes = await axios.get(`${FRONT_URL}/api/reviews/categories`);
         setCategories(categoriesRes.data);
       } catch (error) {
         console.error(error);
@@ -27,11 +28,11 @@ const GamesPage = () => {
         try {
             let gamesRes;
             if (activeFilters.length > 0) {
-                gamesRes = await axios.get('http://localhost:3808/api/reviews/catgames', {
+                gamesRes = await axios.get(`${FRONT_URL}/api/reviews/catgames`, {
                     params: { categories: activeFilters.join(',') },
                 });
             } else {
-                gamesRes = await axios.get('http://localhost:3808/api/reviews/catgames');
+                gamesRes = await axios.get(`${FRONT_URL}/api/reviews/catgames`);
             }
             setGames(gamesRes.data);
         } catch (error) {

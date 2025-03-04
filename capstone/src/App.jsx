@@ -11,6 +11,9 @@ import FollowersPage from './assets/pgs/Followers';
 import FollowingPage from './assets/pgs/Following';
 
 
+
+
+
 function App() {
   const isAdmin = true;
   return (

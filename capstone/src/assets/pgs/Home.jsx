@@ -9,6 +9,7 @@ const Home = () => {
   const [user, setUser] = useState(null);
   const [following, setFollowing] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const FRONT_URL = import.meta.env.VITE_FRONT_URL;
 
   useEffect(() => {
     const getUserData = async () => {
@@ -16,7 +17,7 @@ const Home = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const res = await axios.get("http://localhost:3808/api/users/profile", {
+        const res = await axios.get("${FRONT_URL}/api/users/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
        

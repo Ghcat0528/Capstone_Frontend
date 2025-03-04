@@ -5,6 +5,7 @@ import "../../../src/Popup.css"
 const ReviewPopup = ({ gameId, onClose }) => {
   const [rating, setRating] = useState(1);
   const [content, setContent] = useState('');
+  const FRONT_URL = import.meta.env.VITE_FRONT_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +19,7 @@ const ReviewPopup = ({ gameId, onClose }) => {
   
     try {
       await axios.post(
-        "http://localhost:3808/api/reviews",
+        "${FRONT_URL}/api/reviews",
         { rating: Number(rating), content, gameId },
         {
           headers: {

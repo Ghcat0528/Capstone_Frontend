@@ -12,6 +12,8 @@ const Auth = () => {
     password: "",
   });
   const [error, setError] = useState("");
+  const FRONT_URL = import.meta.env.VITE_FRONT_URL;
+
 
   const toggleForm = () => {
     setLogin(!isLogin);
@@ -28,7 +30,7 @@ const Auth = () => {
     setError("");
   
     try {
-      const endpoint = isLogin ? "http://localhost:3808/api/auth/login" : "http://localhost:3808/api/auth/register";
+      const endpoint = isLogin ? `${FRONT_URL}/api/auth/login` : `${FRONT_URL}/api/auth/register`;
       const { data } = await axios.post(endpoint, formData);
   
       if (isLogin) {

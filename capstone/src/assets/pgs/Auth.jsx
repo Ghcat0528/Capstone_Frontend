@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import '../../../src/Auth.css'
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL 
+
 
 const Auth = () => {
   const navigate = useNavigate();

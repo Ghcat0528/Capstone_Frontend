@@ -15,8 +15,7 @@ const AdminDashboard = () => {
     categories: [], 
   });
   const navigate = useNavigate();
-  const FRONT_URL = import.meta.env.VITE_FRONT_URL;
-
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -30,16 +29,16 @@ const AdminDashboard = () => {
         }
 
         const [dashboardRes, usersRes, gamesRes, reviewsRes] = await Promise.all([
-          axios.get(`${FRONT_URL}/api/admin/dashboard`, {
+          axios.get(`${BACKEND_URL}/api/admin/dashboard`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get(`${FRONT_URL}/api/admin/users`, {
+          axios.get(`${BACKEND_URL}/api/admin/users`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get(`${FRONT_URL}/api/admin/games`, {
+          axios.get(`${BACKEND_URL}/api/admin/games`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get(`${FRONT_URL}/api/admin/reviews`, {
+          axios.get(`${BACKEND_URL}/api/admin/reviews`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
           
@@ -74,7 +73,7 @@ const AdminDashboard = () => {
     if (newGame.title.trim() && newGame.genre.trim()) {
       try {
         const res = await axios.post(
-          "${FRONT_URL}/api/admin/games",
+          `${BACKEND_URL}/api/admin/games`,
           newGame,
           {
             headers: { Authorization: `Bearer ${token}` },

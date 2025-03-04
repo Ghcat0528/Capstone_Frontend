@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import '../../../src/Auth.css'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL 
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -12,8 +13,7 @@ const Auth = () => {
     password: "",
   });
   const [error, setError] = useState("");
-  const FRONT_URL = import.meta.env.VITE_FRONT_URL;
-
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const toggleForm = () => {
     setLogin(!isLogin);
@@ -30,7 +30,7 @@ const Auth = () => {
     setError("");
   
     try {
-      const endpoint = isLogin ? `${FRONT_URL}/api/auth/login` : `${FRONT_URL}/api/auth/register`;
+      const endpoint = isLogin ? `${BACKEND_URL}/api/auth/login` : `${BACKEND_URL}/api/auth/register`;
       const { data } = await axios.post(endpoint, formData);
   
       if (isLogin) {

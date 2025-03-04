@@ -3,8 +3,7 @@ import axios from 'axios';
 import "../../../src/Popup.css";
 
 
-const FRONT_URL = import.meta.env.VITE_FRONT_URL;
-
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
   const [updatedReview, setUpdatedReview] = useState({
     content: review.content,
@@ -19,7 +18,7 @@ const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`${FRONT_URL}/api/reviews/${review.id}`, updatedReview);
+      await axios.put(`${BACKEND_URL}/api/reviews/${review.id}`, updatedReview);
       onClose();
       onEditSubmit();  
     } catch (error) {

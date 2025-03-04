@@ -10,7 +10,7 @@ const UserPage = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   
-  const FRONT_URL = import.meta.env.VITE_FRONT_URL;
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -18,7 +18,7 @@ const UserPage = () => {
         const token = localStorage.getItem("token");
         if (!token) return console.error("No token found.");
 
-        const res = await axios.get(`${FRONT_URL}/api/users/${userId}/profile`, {
+        const res = await axios.get(`${BACKEND_URL}/api/users/${userId}/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -41,7 +41,7 @@ const UserPage = () => {
       if (!token || !loggedInUserId) return;
 
       try {
-        const res = await axios.get(`${FRONT_URL}/api/users/${userId}/isFollowing`, {
+        const res = await axios.get(`${BACKEND_URL}/api/users/${userId}/isFollowing`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setIsFollowing(res.data.isFollowing);
@@ -59,14 +59,14 @@ const UserPage = () => {
       if (!token) return;
 
       await axios.post(
-        `${FRONT_URL}/api/users/follow/${userId}`,
+        `${BACKEND_URL}/api/users/follow/${userId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       setIsFollowing(true);
 
-      const res = await axios.get(`${FRONT_URL}/api/users/${userId}/profile`, {
+      const res = await axios.get(`${BACKEND_URL}/api/users/${userId}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(res.data);
@@ -81,13 +81,13 @@ const UserPage = () => {
       if (!token) return;
 
       await axios.delete(
-        `${FRONT_URL}/api/users/unfollow/${userId}`,
+        `${BACKEND_URL}/api/users/unfollow/${userId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       setIsFollowing(false);
 
-      const res = await axios.get(`${FRONT_URL}/api/users/${userId}/profile`, {
+      const res = await axios.get(`${BACKEND_URL}/api/users/${userId}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(res.data);

@@ -31,7 +31,7 @@ const GamesPage = () => {
                     params: { categories: activeFilters.join(',') },
                 });
             } else {
-                gamesRes = await axios.get(`${BACKEND_URLL}/api/reviews/catgames`);
+                gamesRes = await axios.get(`${BACKEND_URL}/api/reviews/catgames`);
             }
             setGames(gamesRes.data);
         } catch (error) {

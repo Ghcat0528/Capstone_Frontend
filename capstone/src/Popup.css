@@ -1,0 +1,109 @@
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50; 
+  }
+  
+  /* Edit Review Popup */
+  .edit-review-popup .popup-container {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 15px rgba(89, 209, 213, 0.3); 
+    z-index: 51;
+  }
+  
+  .edit-review-popup h2 {
+    color: #ff77e9;
+    text-shadow: 0 0 5px #ff77e9;
+    margin-bottom: 10px;
+  }
+  
+  .edit-review-popup textarea,
+  .edit-review-popup select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #2a2a2a;
+    color: #fff;
+  }
+  
+  .edit-review-popup button {
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .edit-review-popup button:hover {
+    background-color: #ff77e9;
+  }
+  
+  .edit-review-popup .cancel-btn {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .edit-review-popup .save-btn {
+    background-color: #00ffd5;
+    color: #121212;
+  }
+  
+  /* Create Review Popup */
+  .create-review-popup .popup-container {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 15px rgba(89, 209, 213, 0.3);
+    z-index: 51;
+  }
+  
+  .create-review-popup h2 {
+    color: #ff77e9;
+    text-shadow: 0 0 5px #ff77e9;
+  }
+  
+  .create-review-popup label {
+    color: #ff77e9;
+  }
+  
+  .create-review-popup textarea,
+  .create-review-popup input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #2a2a2a;
+    color: #fff;
+  }
+  
+  .create-review-popup button {
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .create-review-popup .cancel-btn {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .create-review-popup .submit-btn {
+    background-color: #00ffd5;
+    color: #121212;
+  }
+  
+  .create-review-popup button:hover {
+    background-color: #ff77e9;
+  }
+  

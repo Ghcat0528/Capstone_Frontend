@@ -7,65 +7,94 @@ const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [games, setGames] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [newCategory, setNewCategory] = useState("");
+  const [confirmationMessage, setConfirmationMessage] = useState("");
+  const [newGame, setNewGame] = useState({
+    title: "",
+    genre: "",
+    picture: "",
+    categories: [], 
+  });
   const navigate = useNavigate();
 
-  // Fetch all dashboard data
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const token = localStorage.getItem("token");  // Or get token from your app's state
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          console.error("No token found!");
+          navigate("/login");
+          return;
+        }
+
         const [dashboardRes, usersRes, gamesRes, reviewsRes, categoriesRes] = await Promise.all([
-          axios.get("/api/admin/dashboard", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+          axios.get("http://localhost:3808/api/admin/dashboard", {
+            headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("/api/admin/users", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+          axios.get("http://localhost:3808/api/admin/users", {
+            headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("/api/admin/games", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+          axios.get("http://localhost:3808/api/admin/games", {
+            headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("/api/admin/reviews", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+          axios.get("http://localhost:3808/api/admin/reviews", {
+            headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("/api/categories", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
+          
         ]);
-        
-        // Log responses to check data
-        console.log("Dashboard Data:", dashboardRes.data);
-        console.log("Users Data:", usersRes.data);
-  
-        // Set data in state
+
+
         setDashboardData(dashboardRes.data);
-        setUsers(usersRes.data);
-        setGames(gamesRes.data);
-        setReviews(reviewsRes.data);
-        setCategories(categoriesRes.data);
+        setUsers(Array.isArray(usersRes.data) ? usersRes.data : []);  
+        setGames(Array.isArray(gamesRes.data) ? gamesRes.data : []);  
+        setReviews(Array.isArray(reviewsRes.data) ? reviewsRes.data : []);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
+
     fetchDashboard();
-  }, []);
-  // Delete a user
+  }, [navigate]);
+
+  const handleGameInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewGame({
+      ...newGame,
+      [name]: value,
+    });
+  };
+
+
+  
+
+  const createGame = async () => {
+    const token = localStorage.getItem("token");
+    if (newGame.title.trim() && newGame.genre.trim()) {
+      try {
+        const res = await axios.post(
+          "http://localhost:3808/api/admin/games",
+          newGame,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setGames([...games, res.data]);
+        setNewGame({ title: "", genre: "", picture: "", categories: [] }); // Reset form
+        setConfirmationMessage("Game successfully added!");
+      } catch (error) {
+        console.error("Failed to create game:", error);
+      }
+    }
+  };
+
+  
   const deleteUser = async (userId) => {
+    const token = localStorage.getItem("token");
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`/api/admin/${userId}`);
+        await axios.delete(`/api/admin/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setUsers(users.filter((user) => user.id !== userId));
       } catch (error) {
         console.error("Failed to delete user:", error);
@@ -73,11 +102,13 @@ const AdminDashboard = () => {
     }
   };
 
-  // Delete a game
   const deleteGame = async (gameId) => {
+    const token = localStorage.getItem("token");
     if (window.confirm("Are you sure you want to delete this game?")) {
       try {
-        await axios.delete(`/api/admin/games/${gameId}`);
+        await axios.delete(`/api/admin/games/${gameId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setGames(games.filter((game) => game.id !== gameId));
       } catch (error) {
         console.error("Failed to delete game:", error);
@@ -85,11 +116,13 @@ const AdminDashboard = () => {
     }
   };
 
-  // Delete a review
   const deleteReview = async (reviewId) => {
+    const token = localStorage.getItem("token");
     if (window.confirm("Are you sure you want to delete this review?")) {
       try {
-        await axios.delete(`/api/admin/review/${reviewId}`);
+        await axios.delete(`/api/admin/review/${reviewId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setReviews(reviews.filter((review) => review.id !== reviewId));
       } catch (error) {
         console.error("Failed to delete review:", error);
@@ -97,22 +130,55 @@ const AdminDashboard = () => {
     }
   };
 
-  // Create a new category
-  const createCategory = async () => {
-    if (newCategory.trim()) {
-      try {
-        const res = await axios.post("/api/admin/categories", { name: newCategory });
-        setCategories([...categories, res.data]);
-        setNewCategory("");
-      } catch (error) {
-        console.error("Failed to create category:", error);
-      }
-    }
-  };
+  
 
   return (
     <div className="p-6">
       <h1 className="text-2xl mb-4">Admin Dashboard</h1>
+
+      {/* Add New Game Form */}
+      <div className="mb-6">
+        <h2 className="text-xl">Add New Game</h2>
+        <input
+          type="text"
+          name="title"
+          placeholder="Game Title"
+          value={newGame.title}
+          onChange={handleGameInputChange}
+          className="border p-2 mb-2"
+        />
+        <input
+          type="text"
+          name="genre"
+          placeholder="Game Genre"
+          value={newGame.genre}
+          onChange={handleGameInputChange}
+          className="border p-2 mb-2"
+        />
+        <input
+          type="text"
+          name="picture"
+          placeholder="Game Picture URL"
+          value={newGame.picture}
+          onChange={handleGameInputChange}
+          className="border p-2 mb-2"
+        />
+        
+        
+
+        <button
+          onClick={createGame}
+          className="bg-blue-500 text-white px-4 py-2"
+        >
+          Add Game
+        </button>
+      </div>
+      {confirmationMessage && (
+        <div className="bg-green-200 p-2 my-2 text-green-800">
+          {confirmationMessage}
+        </div>
+      )}
+
       <div className="mb-6">
         <h2 className="text-xl">Stats</h2>
         <p>Total Users: {dashboardData.totalUsers}</p>
@@ -123,77 +189,67 @@ const AdminDashboard = () => {
       <div className="mb-6">
         <h2 className="text-xl">Users</h2>
         <ul>
-  {Array.isArray(users) && users.length > 0 ? (
-    users.map((user) => (
-      <li key={user.id}>
-        {user.name} ({user.email})
-        <button onClick={() => deleteUser(user.id)} className="ml-2 text-red-500">
-          Delete
-        </button>
-      </li>
-    ))
-  ) : (
-    <li>No users found</li>
-  )}
-</ul>
+          {users.length > 0 ? (
+            users.map((user) => (
+              <li key={user.id}>
+                {user.name} ({user.email})
+                <button
+                  onClick={() => deleteUser(user.id)}
+                  className="ml-2 text-red-500"
+                >
+                  Delete
+                </button>
+              </li>
+            ))
+          ) : (
+            <li>No users found</li>
+          )}
+        </ul>
       </div>
 
       <div className="mb-6">
         <h2 className="text-xl">Games</h2>
         <ul>
-  {Array.isArray(games) && games.length > 0 ? (
-    games.map((game) => (
-      <li key={game.id}>
-        {game.title}
-        <button onClick={() => deleteGame(game.id)} className="ml-2 text-red-500">
-          Delete
-        </button>
-      </li>
-    ))
-  ) : (
-    <li>No games found</li>
-  )}
-</ul>
+          {games.length > 0 ? (
+            games.map((game) => (
+              <li key={game.id}>
+                {game.title}
+                <button
+                  onClick={() => deleteGame(game.id)}
+                  className="ml-2 text-red-500"
+                >
+                  Delete
+                </button>
+              </li>
+            ))
+          ) : (
+            <li>No games found</li>
+          )}
+        </ul>
       </div>
 
       <div className="mb-6">
         <h2 className="text-xl">Reviews</h2>
         <ul>
-  {Array.isArray(reviews) && reviews.length > 0 ? (
-    reviews.map((review) => (
-      <li key={review.id}>
-        {review.content}
-        <button onClick={() => deleteReview(review.id)} className="ml-2 text-red-500">
-          Delete
-        </button>
-      </li>
-    ))
-  ) : (
-    <li>No reviews found</li>
-  )}
-</ul>
+          {reviews.length > 0 ? (
+            reviews.map((review) => (
+              <li key={review.id}>
+                {review.content}
+                <button
+                  onClick={() => deleteReview(review.id)}
+                  className="ml-2 text-red-500"
+                >
+                  Delete
+                </button>
+              </li>
+            ))
+          ) : (
+            <li>No reviews found</li>
+          )}
+        </ul>
       </div>
 
-      <div className="mb-6">
-        <h2 className="text-xl">Categories</h2>
-        <input
-          type="text"
-          placeholder="New category"
-          value={newCategory}
-          onChange={(e) => setNewCategory(e.target.value)}
-          className="border p-1 mr-2"
-        />
-        <button onClick={createCategory} className="bg-blue-500 text-white px-2">Add</button>
-        <ul>
-  {Array.isArray(categories) && categories.length > 0 ? (
-    categories.map((category) => (
-      <li key={category.id}>{category.name}</li>
-    ))
-  ) : (
-    <li>No categories found</li>
-  )}
-</ul>
-      </div>
+      
     </div>
   );
 };

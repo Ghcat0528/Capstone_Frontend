@@ -1,0 +1,269 @@
+/* Dark mode background and text styles */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+/* Home */
+body {
+    display: flex;
+    justify-content: center;  
+    align-items: center;  
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Press Start 2P', sans-serif; 
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1f1f1f;
+    border: 2px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(89, 209, 213, 0.5);
+    
+  }
+  
+  h1, h2 {
+    color: #ff77e9; 
+    text-shadow: 0 0 5px #ff77e9;
+  }
+  
+  a {
+    color: #00ffd5;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+    a:hover {
+    color: #000000;
+  }  
+  
+  button, .btn {
+    background-color: #00ffd5;
+    color: #121212;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+  }
+  button:hover, .btn:hover {
+    background-color: #ff77e9;
+  }
+  
+  .review-card {
+    background-color: #2a2a2a;
+    border: 1px solid #333;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .profile-link {
+    justify-content: center;
+    display: flex;
+    color: #00ffd5;
+    font-weight: bold;
+  }
+  .profile-link:hover {
+    color: #ff77e9;
+  }
+  
+  .profile-button {
+    justify-content: center;
+    display: flex;
+    border: 2px solid #00ffd5;
+    transition: border-color 0.3s;
+    color: #121212;
+
+  }
+  .profile-button:hover {
+    border-color: #ff77e9;
+  }
+    
+
+  /* Games */
+
+.games-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1f1f1f;  
+    border: 2px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(89, 209, 213, 0.5);  
+  }
+  
+  
+  .games-container h1, .games-container h2, .games-container h3 {
+    color: #ff77e9;  
+    text-shadow: 0 0 5px #ff77e9;  
+    font-family: 'Press Start 2P', sans-serif;  
+    display: flex;
+    justify-content: center;
+  }
+  
+  .filter-button {
+    background-color: #00ffd5;  
+    color: #121212;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 5px;
+  }
+  
+  .filter-button:hover {
+    background-color: #ff77e9;  
+    transform: scale(1.05);  
+  }
+  
+  .filter-button:active {
+    transform: scale(0.95); 
+  }
+  
+  .filter-button.active {
+    background-color: #ff77e9; 
+    color: #121212;
+  }
+  
+ 
+  .games-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .games-list li {
+    background-color: #2a2a2a;  
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);  
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .games-list li:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 4px 8px rgba(100, 200, 200, 0.3);  
+  }
+  
+
+  .game-link {
+    text-decoration: none;
+    color: #00ffd5;  
+    transition: color 0.3s ease;
+  }
+  
+  .game-link:hover {
+    color: #ff77e9;  
+    text-shadow: 0 0 5px #ff77e9;  
+  }
+  
+  /* Game Details */
+
+
+.game-details-container {
+    max-width: 1200px; 
+    min-height: 80vh;  
+    margin: 0 auto;
+    padding: 40px 20px;  
+    background-color: #1f1f1f;  
+    border: 2px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(89, 209, 213, 0.5);  
+  }
+  
+  .game-details-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px; 
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 255, 213, 0.5);  
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .game-details-container p {
+    color: #00ffd5; 
+    font-weight: bold;
+    font-size: 1.1em;
+    width: 100%; 
+    max-width: 100%; 
+    margin-bottom: 20px;
+  }
+  
+  
+  .game-details-container p {
+    margin-bottom: 15px;
+  }
+  
+  
+  .game-details-container .button-container {
+    display: flex;
+    justify-content: center;  
+    gap: 15px;  
+    margin-top: 30px;
+  }
+  
+ 
+  .game-details-container button {
+    background-color: #00ffd5;  
+    color: #121212;
+    border: none;
+    padding: 10px 20px; 
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .game-details-container button:hover {
+    background-color: #ff77e9;  
+  }
+  
+
+  .review-card {
+    background-color: #2a2a2a;
+    border: 1px solid #333;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
+
+  .review-link {
+    color: #00ffd5;
+    font-weight: bold;
+  }
+  
+  .review-link:hover {
+    color: #ff77e9;  
+  }
+  
+ 
+  .review-edit-button {
+    color: #ff77e9;
+    font-size: 0.85em;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .review-edit-button:hover {
+    color: #00ffd5;  
+  }
+  
+  /* header */
+  
+  
+
+  .profile-link {
+    color: #00ffd5; 
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .profile-link:hover {
+    color: #ff77e9; 
+  }
+  

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import '../../../src/Auth.css'
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -25,7 +26,6 @@ const Auth = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    console.log("Form data:", formData); // Log form data
   
     try {
       const endpoint = isLogin ? "http://localhost:3808/api/auth/login" : "http://localhost:3808/api/auth/register";
@@ -59,11 +59,11 @@ const Auth = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-bold mb-4">{isLogin ? "Login" : "Register"}</h2>
+    <div className="auth-container">
+      <div className="auth-form-box">
+        <h2 className="auth-form-title">{isLogin ? "Login" : "Register"}</h2>
 
-        {error && <p className="text-red-500 mb-2">{error}</p>}
+        {error && <p className="auth-error">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {!isLogin && (
@@ -73,7 +73,7 @@ const Auth = () => {
               value={formData.name}
               onChange={handleChange}
               placeholder="Name"
-              className="w-full p-2 border rounded"
+              className="auth-input"
               required
             />
           )}
@@ -83,7 +83,7 @@ const Auth = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
-            className="w-full p-2 border rounded"
+            className="auth-input"
             required
           />
           <input
@@ -92,12 +92,12 @@ const Auth = () => {
             value={formData.password}
             onChange={handleChange}
             placeholder="Password"
-            className="w-full p-2 border rounded"
+            className="auth-input"
             required
           />
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
+            className="auth-submit-btn"
           >
             {isLogin ? "Login" : "Register"}
           </button>
@@ -105,7 +105,7 @@ const Auth = () => {
 
         <p className="mt-4 text-center">
           {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-          <button className="text-blue-500 underline" onClick={toggleForm}>
+          <button className="auth-toggle-text" onClick={toggleForm}>
             {isLogin ? "Register" : "Login"}
           </button>
         </p>
@@ -113,5 +113,6 @@ const Auth = () => {
     </div>
   );
 };
+
 
 export default Auth;

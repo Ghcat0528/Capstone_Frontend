@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../../../src/Profiles.css" 
+
+
 
 const MyUserPage = () => {
   const [user, setUser] = useState(null);
@@ -69,7 +72,7 @@ const MyUserPage = () => {
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setIsFollowing(true); // After following, set follow status to true
+      setIsFollowing(true);
     } catch (error) {
       console.error("Error following user:", error);
     }
@@ -84,7 +87,7 @@ const MyUserPage = () => {
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setIsFollowing(false); // After unfollowing, set follow status to false
+      setIsFollowing(false);  
     } catch (error) {
       console.error("Error unfollowing user:", error);
     }
@@ -118,7 +121,7 @@ const MyUserPage = () => {
   };
   useEffect(() => {
     if (token) {
-      const decodedToken = JSON.parse(atob(token.split(".")[1])); // Decode JWT token
+      const decodedToken = JSON.parse(atob(token.split(".")[1])); 
       if (decodedToken?.role === "Admin") {
         setIsAdmin(true);
       }
@@ -128,106 +131,121 @@ const MyUserPage = () => {
   if (!user) return <p>Loading...</p>;
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex items-center space-x-4 mb-4">
-        <h1 className="text-3xl font-bold">
-          {user.email === loggedInUserEmail ? "Your Profile" : `${user.name}'s Profile`}
-        </h1>
-      </div>
-
-      {/* Only show name and email for logged-in user */}
-      <div className="bg-white shadow-md rounded p-4 mb-4">
-        <h2 className="text-2xl font-semibold mb-2">{user.name}</h2>
-        <p className="text-gray-700">Email: {user.email}</p>
-      </div>
-
-      <div className="mt-4">
-        <Link to={`/users/${user.id}/following`} className="text-blue-500 underline">
-          Following ({user.following?.length ?? 0})
-        </Link>
-        {" | "}
-        <Link to={`/users/${user.id}/followers`} className="text-blue-500 underline">
-          Followers ({user.followers?.length ?? 0})
-        </Link>
-      </div>
- {/* Small Footer Link to Admin Dashboard */}
- {isAdmin && (
-          <div className="mt-4 text-center">
-            <Link
-              to="/admin-dashboard"
-              className="text-blue-500 text-sm underline hover:text-blue-700"
-            >
-              Go to Admin Dashboard
-            </Link>
-          </div>
-        )}
-      {/* Edit Profile Button */}
-      <button
-        onClick={() => setIsEditing(!isEditing)}
-        className="mt-4 px-4 py-2 text-white bg-blue-500 rounded"
-      >
-        {isEditing ? "Cancel" : "Edit Profile"}
-      </button>
-
-      {/* Edit Profile Form (Only visible when editing) */}
-      {isEditing && (
-        <form onSubmit={handleUpdateProfile} className="mt-4 space-y-2">
-          <div>
-            <label className="block text-lg">Name:</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="border p-2 w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-lg">Email:</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="border p-2 w-full"
-            />
-          </div>
-          <button
-            type="submit"
-            className="px-4 py-2 text-white bg-green-500 rounded"
-          >
-            Save Changes
-          </button>
-        </form>
-      )}
-
-      <div className="mt-6">
-        <button
-          onClick={() => navigate(-1)}
-          className="px-4 py-2 text-white bg-gray-500 rounded"
-        >
-          Back
-        </button>
-      </div>
-
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold">Reviews</h2>
-        {user.reviews && user.reviews.length > 0 ? (
-          <ul>
-            {user.reviews.map((review) => (
-              <li key={review.id} className="border p-2 my-2">
-                <Link to={`/games/${review.game.id}`} className="text-blue-500 font-bold">
-                  {review.game.title}
-                </Link>
-                <p>
-                  {review.content} ({review.rating}/5)
-                </p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No reviews yet.</p>
-        )}
-      </div>
+    <div className="profile-container logged-in-profile mx-auto p-4">
+    <div className="flex items-center space-x-4 mb-4">
+      <h1 className="text-3xl font-bold">
+        {user.email === loggedInUserEmail ? "Your Profile" : `${user.name}'s Profile`}
+      </h1>
     </div>
+  
+    {/* Profile Info Section */}
+    <div className="profile-info bg-white shadow-md rounded p-4 mb-4">
+      <h2 className="text-2xl font-semibold mb-2">{user.name}</h2>
+      <p className="text-gray-700">Email: {user.email}</p>
+    </div>
+  
+    <div className="mt-4">
+      <Link to={`/users/${user.id}/following`} className="text-blue-500 underline">
+        Following ({user.following?.length ?? 0})
+      </Link>
+      {" | "}
+      <Link to={`/users/${user.id}/followers`} className="text-blue-500 underline">
+        Followers ({user.followers?.length ?? 0})
+      </Link>
+    </div>
+  
+    {/* Admin Dashboard Link */}
+    {isAdmin && (
+      <div className="mt-4 text-center">
+        <Link
+          to="/admin-dashboard"
+          className="text-blue-500 text-sm underline hover:text-blue-700"
+        >
+          Go to Admin Dashboard
+        </Link>
+      </div>
+    )}
+  
+    {/* Edit Profile Button */}
+    <button
+      onClick={() => setIsEditing(!isEditing)}
+      className="mt-4 px-4 py-2 text-white bg-blue-500 rounded"
+    >
+      {isEditing ? "Cancel" : "Edit Profile"}
+    </button>
+  
+    {/* Edit Profile Form (only visible when editing) */}
+    {isEditing && (
+  <form onSubmit={handleUpdateProfile} className="edit-profile-form mt-4 space-y-4">
+    <div>
+      <label className="block">Name:</label>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="p-2 w-full"
+      />
+    </div>
+    <div>
+      <label className="block">Email:</label>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="p-2 w-full"
+      />
+    </div>
+    <div className="flex justify-between space-x-2">
+      <button
+        type="button"
+        onClick={() => setIsEditing(false)}
+        className="cancel-button"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        className="px-4 py-2 text-white bg-green-500 rounded"
+      >
+        Save Changes
+      </button>
+    </div>
+  </form>
+)}
+
+  
+    {/* Back Button */}
+    <div className="mt-6">
+      <button
+        onClick={() => navigate(-1)}
+        className="px-4 py-2 text-white bg-gray-500 rounded"
+      >
+        Back
+      </button>
+    </div>
+  
+    {/* Reviews Section */}
+    <div className="mt-6">
+      <h2 className="text-xl font-semibold">Reviews</h2>
+      {user.reviews && user.reviews.length > 0 ? (
+        <ul>
+          {user.reviews.map((review) => (
+            <li key={review.id} className="border p-2 my-2">
+              <Link to={`/games/${review.game.id}`} className="text-blue-500 font-bold">
+                {review.game.title}
+              </Link>
+              <p>
+                {review.content} ({review.rating}/5)
+              </p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No reviews yet.</p>
+      )}
+    </div>
+  </div>
+  
   );
 };
 

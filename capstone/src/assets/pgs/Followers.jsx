@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const FollowersPage = () => {
-  const { userId } = useParams();  // Extract userId from URL
+  const { userId } = useParams();  
   const [followers, setFollowers] = useState([]);
   const navigate = useNavigate();
 
@@ -13,7 +13,7 @@ const FollowersPage = () => {
           const token = localStorage.getItem('token');  
           const response = await axios.get(`http://localhost:3808/api/users/${userId}/followers`, {
             headers: {
-              'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+              'Authorization': `Bearer ${token}`  
             }
           });
           setFollowers(response.data.followers);
@@ -23,10 +23,10 @@ const FollowersPage = () => {
       };
       
 
-    if (userId) { // Ensure the userId is available before making the request
+    if (userId) { 
       fetchFollowers();
     }
-  }, [userId]);  // Only re-run if userId changes
+  }, [userId]); 
 
   return (
     <div>

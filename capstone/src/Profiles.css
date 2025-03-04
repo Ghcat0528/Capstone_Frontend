@@ -1,0 +1,119 @@
+
+.profile-container.logged-in-profile {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .profile-container.logged-in-profile h1, .profile-container.logged-in-profile h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #2d2d2d;
+  }
+  
+  .profile-container.logged-in-profile .profile-info {
+    background-color: #472c42;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+  }
+  
+  .text-blue-500:hover {
+    color: #ff77e9; 
+  }
+  .profile-container.logged-in-profile .profile-info h2, 
+  .profile-container.logged-in-profile .profile-info p {
+    color: #e5e7eb;
+  }
+  
+  .profile-container.other-user-profile {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .profile-container.other-user-profile h1, .profile-container.other-user-profile h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #2d2d2d;
+  }
+  
+  .profile-container.other-user-profile .follow-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+ 
+  .profile-container.logged-in-profile .reviews-list li, .profile-container.other-user-profile .reviews-list li {
+    border: 1px solid #ddd;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+ 
+  .profile-container .follow-button:hover {
+    background-color: #3b82f6;
+  }
+  
+  .profile-container .follow-button:active {
+    background-color: #2563eb;
+  }
+  
+  /* Edit Profile Form */
+.edit-profile-form {
+    background-color: #1f2937; 
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    color: #fff; }
+  
+  .edit-profile-form input {
+    background-color: #2d3748;
+    border: 1px solid #4a5568; 
+    color: #fff; 
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+  
+  .edit-profile-form input:focus {
+    outline: none;
+    border-color: #f472b6; 
+    background-color: #3e4c59; 
+  }
+  
+  .edit-profile-form label {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    display: block;
+    color: #e2e8f0; 
+  }
+  
+  .edit-profile-form button {
+    background-color: #f472b6; 
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 12px;
+  }
+  
+  .edit-profile-form button:hover {
+    background-color: #ec4899; 
+  }
+  
+ 
+  .edit-profile-form .cancel-button {
+    background-color: #4a5568; 
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    margin-top: 8px;
+  }
+  
+  .edit-profile-form .cancel-button:hover {
+    background-color: #472c42;
+  }
+  

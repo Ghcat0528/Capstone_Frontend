@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const FollowingPage = () => {
-  const { userId } = useParams();  // userId should be passed in the route
+  const { userId } = useParams(); 
   const [following, setFollowing] = useState([]);
   const navigate = useNavigate();
 
@@ -12,20 +12,19 @@ const FollowingPage = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          `http://localhost:3808/api/users/${userId}/following`,  // Adjust URL as needed
+          `http://localhost:3808/api/users/${userId}/following`, 
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        console.log("Following data:", res.data);
-        setFollowing(res.data.following);  // Access the 'following' array from the response
+        setFollowing(res.data.following);
       } catch (error) {
         console.error("Error fetching following:", error);
       }
     };
 
-    if (userId) {  // Make sure userId exists before making request
+    if (userId) { 
       fetchFollowing();
     }
-  }, [userId]);  // Only re-run when userId changes, no need for following.length
+  }, [userId]);  
 
   return (
     <div>

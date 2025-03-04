@@ -38,7 +38,6 @@ const Auth = () => {
         
         navigate('/');
       } else {
-        // Handle register
         alert("Signup successful!");
         window.location.reload();
       }

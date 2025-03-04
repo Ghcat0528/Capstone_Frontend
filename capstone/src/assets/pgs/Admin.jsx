@@ -27,7 +27,7 @@ const AdminDashboard = () => {
           return;
         }
 
-        const [dashboardRes, usersRes, gamesRes, reviewsRes, categoriesRes] = await Promise.all([
+        const [dashboardRes, usersRes, gamesRes, reviewsRes] = await Promise.all([
           axios.get("http://localhost:3808/api/admin/dashboard", {
             headers: { Authorization: `Bearer ${token}` },
           }),

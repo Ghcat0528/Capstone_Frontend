@@ -63,35 +63,8 @@ const MyUserPage = () => {
     }
   };
 
-  const handleFollow = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) return;
-      await axios.post(
-        `http://localhost:3808/api/users/follow/${user.id}`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setIsFollowing(true);
-    } catch (error) {
-      console.error("Error following user:", error);
-    }
-  };
-
-  const handleUnfollow = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) return;
-      await axios.post(
-        `http://localhost:3808/api/users/unfollow/${user.id}`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setIsFollowing(false);  
-    } catch (error) {
-      console.error("Error unfollowing user:", error);
-    }
-  };
+  
+  
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();

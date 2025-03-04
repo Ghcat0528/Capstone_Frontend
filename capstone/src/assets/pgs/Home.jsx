@@ -16,11 +16,9 @@ const Home = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-       
         const res = await axios.get("http://localhost:3808/api/users/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
-
        
         setUser(res.data);
         setReviews(res.data.reviews || []); 

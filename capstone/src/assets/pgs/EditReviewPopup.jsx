@@ -65,5 +65,6 @@ const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
     </div>
   );
 };
+};
 
 export default EditReviewPopup;

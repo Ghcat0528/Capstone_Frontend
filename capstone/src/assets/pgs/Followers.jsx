@@ -5,7 +5,7 @@ import axios from 'axios';
 const FollowersPage = () => {
   const { userId } = useParams();  
   const [followers, setFollowers] = useState([]);
-  const navigate = useNavigate();
+  const navigate = useNavigate();  // useNavigate hook
 
   useEffect(() => {
     const fetchFollowers = async () => {
@@ -22,7 +22,6 @@ const FollowersPage = () => {
         }
       };
       
-
     if (userId) { 
       fetchFollowers();
     }
@@ -30,7 +29,7 @@ const FollowersPage = () => {
 
   return (
     <div>
-       <button onClick={() => navigate(-1)}>🔙 Back</button>  
+       <button onClick={() => navigate(-1)}>🔙 Back</button>  {/* Button to go back */}
       <h2>Followers</h2>
       {followers.length > 0 ? (
         <ul>

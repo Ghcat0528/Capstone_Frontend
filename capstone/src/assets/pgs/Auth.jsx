@@ -28,19 +28,23 @@ const Auth = () => {
     setError("");
   
     try {
-      const endpoint = isLogin ? "https://capstone-backend-1-1cia.onrender.com/api/auth/login" : "https://capstone-backend-1-1cia.onrender.com/api/auth/register";
+      const endpoint = isLogin
+        ? "https://capstone-backend-1-1cia.onrender.com/api/auth/login"
+        : "https://capstone-backend-1-1cia.onrender.com/api/auth/register";
+        
       const { data } = await axios.post(endpoint, formData);
   
       if (isLogin) {
-       
         localStorage.setItem("token", data.token);
         alert("Login successful!");
         
+        // Navigate to the home page after login
         navigate('/');
       } else {
-      
         alert("Signup successful!");
-        window.location.reload();
+        
+        // Redirect to the login page after successful registration
+        navigate('/login');
       }
     } catch (error) {
       if (error.response) {
@@ -113,6 +117,5 @@ const Auth = () => {
     </div>
   );
 };
-
 
 export default Auth;

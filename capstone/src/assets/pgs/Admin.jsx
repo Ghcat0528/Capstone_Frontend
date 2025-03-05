@@ -40,9 +40,7 @@ const AdminDashboard = () => {
           axios.get("https://capstone-backend-1-1cia.onrender.com/api/admin/reviews", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          
         ]);
-
 
         setDashboardData(dashboardRes.data);
         setUsers(Array.isArray(usersRes.data) ? usersRes.data : []);  
@@ -64,9 +62,6 @@ const AdminDashboard = () => {
     });
   };
 
-
-  
-
   const createGame = async () => {
     const token = localStorage.getItem("token");
     if (newGame.title.trim() && newGame.genre.trim()) {
@@ -79,7 +74,7 @@ const AdminDashboard = () => {
           }
         );
         setGames([...games, res.data]);
-        setNewGame({ title: "", genre: "", picture: "", categories: [] }); // Reset form
+        setNewGame({ title: "", genre: "", picture: "", categories: [] });
         setConfirmationMessage("Game successfully added!");
       } catch (error) {
         console.error("Failed to create game:", error);
@@ -87,12 +82,11 @@ const AdminDashboard = () => {
     }
   };
 
-  
   const deleteUser = async (userId) => {
     const token = localStorage.getItem("token");
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`/api/admin/${userId}`, {
+        await axios.delete(`https://capstone-backend-1-1cia.onrender.com/api/admin/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsers(users.filter((user) => user.id !== userId));
@@ -106,7 +100,7 @@ const AdminDashboard = () => {
     const token = localStorage.getItem("token");
     if (window.confirm("Are you sure you want to delete this game?")) {
       try {
-        await axios.delete(`/api/admin/games/${gameId}`, {
+        await axios.delete(`https://capstone-backend-1-1cia.onrender.com/api/admin/games/${gameId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setGames(games.filter((game) => game.id !== gameId));
@@ -120,7 +114,7 @@ const AdminDashboard = () => {
     const token = localStorage.getItem("token");
     if (window.confirm("Are you sure you want to delete this review?")) {
       try {
-        await axios.delete(`/api/admin/review/${reviewId}`, {
+        await axios.delete(`https://capstone-backend-1-1cia.onrender.com/api/admin/review/${reviewId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setReviews(reviews.filter((review) => review.id !== reviewId));
@@ -130,13 +124,10 @@ const AdminDashboard = () => {
     }
   };
 
-  
-
   return (
     <div className="p-6">
       <h1 className="text-2xl mb-4">Admin Dashboard</h1>
 
-      {/* Add New Game Form */}
       <div className="mb-6">
         <h2 className="text-xl">Add New Game</h2>
         <input
@@ -163,8 +154,6 @@ const AdminDashboard = () => {
           onChange={handleGameInputChange}
           className="border p-2 mb-2"
         />
-        
-        
 
         <button
           onClick={createGame}
@@ -173,6 +162,7 @@ const AdminDashboard = () => {
           Add Game
         </button>
       </div>
+
       {confirmationMessage && (
         <div className="bg-green-200 p-2 my-2 text-green-800">
           {confirmationMessage}
@@ -189,67 +179,19 @@ const AdminDashboard = () => {
       <div className="mb-6">
         <h2 className="text-xl">Users</h2>
         <ul>
-          {users.length > 0 ? (
-            users.map((user) => (
-              <li key={user.id}>
-                {user.name} ({user.email})
-                <button
-                  onClick={() => deleteUser(user.id)}
-                  className="ml-2 text-red-500"
-                >
-                  Delete
-                </button>
-              </li>
-            ))
-          ) : (
-            <li>No users found</li>
-          )}
+          {users.map((user) => (
+            <li key={user.id}>
+              {user.name} ({user.email})
+              <button
+                onClick={() => deleteUser(user.id)}
+                className="ml-2 text-red-500"
+              >
+                Delete
+              </button>
+            </li>
+          ))}
         </ul>
       </div>
-
-      <div className="mb-6">
-        <h2 className="text-xl">Games</h2>
-        <ul>
-          {games.length > 0 ? (
-            games.map((game) => (
-              <li key={game.id}>
-                {game.title}
-                <button
-                  onClick={() => deleteGame(game.id)}
-                  className="ml-2 text-red-500"
-                >
-                  Delete
-                </button>
-              </li>
-            ))
-          ) : (
-            <li>No games found</li>
-          )}
-        </ul>
-      </div>
-
-      <div className="mb-6">
-        <h2 className="text-xl">Reviews</h2>
-        <ul>
-          {reviews.length > 0 ? (
-            reviews.map((review) => (
-              <li key={review.id}>
-                {review.content}
-                <button
-                  onClick={() => deleteReview(review.id)}
-                  className="ml-2 text-red-500"
-                >
-                  Delete
-                </button>
-              </li>
-            ))
-          ) : (
-            <li>No reviews found</li>
-          )}
-        </ul>
-      </div>
-
-      
     </div>
   );
 };

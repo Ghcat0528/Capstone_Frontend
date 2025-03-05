@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"; 
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../../../src/Profiles.css" 
-
-
+import "../../../src/Profiles.css";
 
 const MyUserPage = () => {
   const [user, setUser] = useState(null);
@@ -20,29 +18,33 @@ const MyUserPage = () => {
 
   useEffect(() => {
     const getLoggedInUser = async () => {
-        try {
-          const token = localStorage.getItem("token");
-          if (!token) return;
-          
-          const res = await axios.get("https://capstone-backend-1-1cia.onrender.com/api/users/profile", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-    
-          setUser(res.data);
-        } catch (error) {
-          console.error("Error fetching logged-in user data:", error);
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          navigate("/auth");
+          return;
         }
-      };
-    
-      getLoggedInUser();
-    }, []);
-    
-    useEffect(() => {
-      if (user) {
-        setFollowers(user.followers || []);
-        setFollowing(user.following || []);
+        
+        const res = await axios.get("https://capstone-backend-1-1cia.onrender.com/api/users/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setUser(res.data);
+      } catch (error) {
+        console.error("Error fetching logged-in user data:", error);
+        navigate("/auth");
       }
-    }, [user]);
+    };
+
+    getLoggedInUser();
+  }, [navigate]);
+
+  useEffect(() => {
+    if (user) {
+      setFollowers(user.followers || []);
+      setFollowing(user.following || []);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -62,9 +64,6 @@ const MyUserPage = () => {
       console.error("Error checking follow status:", error);
     }
   };
-
-  
-  
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
@@ -92,6 +91,7 @@ const MyUserPage = () => {
       console.error("Error updating profile:", error);
     }
   };
+
   useEffect(() => {
     if (token) {
       const decodedToken = JSON.parse(atob(token.split(".")[1])); 
@@ -105,120 +105,102 @@ const MyUserPage = () => {
 
   return (
     <div className="profile-container logged-in-profile mx-auto p-4">
-    <div className="flex items-center space-x-4 mb-4">
-      <h1 className="text-3xl font-bold">
-        {user.email === loggedInUserEmail ? "Your Profile" : `${user.name}'s Profile`}
-      </h1>
-    </div>
-  
-    {/* Profile Info Section */}
-    <div className="profile-info bg-white shadow-md rounded p-4 mb-4">
-      <h2 className="text-2xl font-semibold mb-2">{user.name}</h2>
-      <p className="text-gray-700">Email: {user.email}</p>
-    </div>
-  
-    <div className="mt-4">
-      <Link to={`/users/${user.id}/following`} className="text-blue-500 underline">
-        Following ({user.following?.length ?? 0})
-      </Link>
-      {" | "}
-      <Link to={`/users/${user.id}/followers`} className="text-blue-500 underline">
-        Followers ({user.followers?.length ?? 0})
-      </Link>
-    </div>
-  
-    {/* Admin Dashboard Link */}
-    {isAdmin && (
-      <div className="mt-4 text-center">
-        <Link
-          to="/admin-dashboard"
-          className="text-blue-500 text-sm underline hover:text-blue-700"
-        >
-          Go to Admin Dashboard
+      <div className="flex items-center space-x-4 mb-4">
+        <h1 className="text-3xl font-bold">
+          {user.email === loggedInUserEmail ? "Your Profile" : `${user.name}'s Profile`}
+        </h1>
+      </div>
+
+      <div className="profile-info bg-white shadow-md rounded p-4 mb-4">
+        <h2 className="text-2xl font-semibold mb-2">{user.name}</h2>
+        <p className="text-gray-700">Email: {user.email}</p>
+      </div>
+
+      <div className="mt-4">
+        <Link to={`/users/${user.id}/following`} className="text-blue-500 underline">
+          Following ({user.following?.length ?? 0})
+        </Link>
+        {" | "}
+        <Link to={`/users/${user.id}/followers`} className="text-blue-500 underline">
+          Followers ({user.followers?.length ?? 0})
         </Link>
       </div>
-    )}
-  
-    {/* Edit Profile Button */}
-    <button
-      onClick={() => setIsEditing(!isEditing)}
-      className="mt-4 px-4 py-2 text-white bg-blue-500 rounded"
-    >
-      {isEditing ? "Cancel" : "Edit Profile"}
-    </button>
-  
-    {/* Edit Profile Form (only visible when editing) */}
-    {isEditing && (
-  <form onSubmit={handleUpdateProfile} className="edit-profile-form mt-4 space-y-4">
-    <div>
-      <label className="block">Name:</label>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="p-2 w-full"
-      />
-    </div>
-    <div>
-      <label className="block">Email:</label>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="p-2 w-full"
-      />
-    </div>
-    <div className="flex justify-between space-x-2">
-      <button
-        type="button"
-        onClick={() => setIsEditing(false)}
-        className="cancel-button"
-      >
-        Cancel
-      </button>
-      <button
-        type="submit"
-        className="px-4 py-2 text-white bg-green-500 rounded"
-      >
-        Save Changes
-      </button>
-    </div>
-  </form>
-)}
 
-  
-    {/* Back Button */}
-    <div className="mt-6">
-      <button
-        onClick={() => navigate(-1)}
-        className="px-4 py-2 text-white bg-gray-500 rounded"
-      >
-        Back
-      </button>
-    </div>
-  
-    {/* Reviews Section */}
-    <div className="mt-6">
-      <h2 className="text-xl font-semibold">Reviews</h2>
-      {user.reviews && user.reviews.length > 0 ? (
-        <ul>
-          {user.reviews.map((review) => (
-            <li key={review.id} className="border p-2 my-2">
-              <Link to={`/games/${review.game.id}`} className="text-blue-500 font-bold">
-                {review.game.title}
-              </Link>
-              <p>
-                {review.content} ({review.rating}/5)
-              </p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No reviews yet.</p>
+      {isAdmin && (
+        <div className="mt-4 text-center">
+          <Link to="/admin-dashboard" className="text-blue-500 text-sm underline hover:text-blue-700">
+            Go to Admin Dashboard
+          </Link>
+        </div>
       )}
+
+      <button
+        onClick={() => setIsEditing(!isEditing)}
+        className="mt-4 px-4 py-2 text-white bg-blue-500 rounded"
+      >
+        {isEditing ? "Cancel" : "Edit Profile"}
+      </button>
+
+      {isEditing && (
+        <form onSubmit={handleUpdateProfile} className="edit-profile-form mt-4 space-y-4">
+          <div>
+            <label className="block">Name:</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="p-2 w-full"
+            />
+          </div>
+          <div>
+            <label className="block">Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="p-2 w-full"
+            />
+          </div>
+          <div className="flex justify-between space-x-2">
+            <button type="button" onClick={() => setIsEditing(false)} className="cancel-button">
+              Cancel
+            </button>
+            <button type="submit" className="px-4 py-2 text-white bg-green-500 rounded">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      )}
+
+      <div className="mt-6">
+        <button
+          onClick={() => navigate(-1)}
+          className="px-4 py-2 text-white bg-gray-500 rounded"
+        >
+          Back
+        </button>
+      </div>
+
+      <div className="mt-6">
+        <h2 className="text-xl font-semibold">Reviews</h2>
+        {user.reviews && user.reviews.length > 0 ? (
+          <ul>
+            {user.reviews.map((review) => (
+              <li key={review.id} className="border p-2 my-2">
+                <Link to={`/games/${review.game.id}`} className="text-blue-500 font-bold">
+                  {review.game.title}
+                </Link>
+                <p>
+                  {review.content} ({review.rating}/5)
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No reviews yet.</p>
+        )}
+      </div>
     </div>
-  </div>
-  
   );
 };
 

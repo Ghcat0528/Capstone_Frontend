@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react"; 
+import { useNavigate } from "react-router-dom";  // Import useNavigate
 import axios from "axios";
-import "../../../src/non-loggedin.css" 
-
-
+import "../../../src/non-loggedin.css";
 
 const Home = () => {
   const [user, setUser] = useState(null);
   const [following, setFollowing] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const navigate = useNavigate();  // useNavigate hook
 
   useEffect(() => {
     const getUserData = async () => {
@@ -37,9 +36,9 @@ const Home = () => {
 
       {!user && (
         <div className="mt-4">
-          <Link to="/auth" className="profile-link">
+          <button onClick={() => navigate("/auth")} className="profile-link">
             Sign up or Log in
-          </Link>
+          </button>  {/* Consistent useNavigate for navigation */}
         </div>
       )}
 
@@ -50,9 +49,9 @@ const Home = () => {
           <ul>
             {following.map((followedUser) => (
               <li key={followedUser.id} className="flex items-center space-x-4 my-2">
-                <Link to={`/users/${followedUser.id}`} className="profile-link">
+                <button onClick={() => navigate(`/users/${followedUser.id}`)} className="profile-link">
                   {followedUser.name}
-                </Link>
+                </button>  {/* Consistent useNavigate for user profile */}
               </li>
             ))}
           </ul>
@@ -80,21 +79,22 @@ const Home = () => {
       {/* Go to My Profile Button */}
       {user && (
         <div className="mt-6">
-          <Link
-            to="/myuserpage"
+          <button
+            onClick={() => navigate("/myuserpage")}
             className="btn profile-button"
           >
             Go to My Profile
-          </Link>
+          </button>  {/* Consistent useNavigate for profile navigation */}
         </div>
       )}
 
       <div className="mt-6">
-        <Link to="/games" className="profile-link">
+        <button onClick={() => navigate("/games")} className="profile-link">
           Browse Games
-        </Link>
+        </button> 
       </div>
     </div>
   );
 };
+
 export default Home;

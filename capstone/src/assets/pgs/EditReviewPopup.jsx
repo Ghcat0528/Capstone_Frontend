@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importing useNavigate
 import axios from 'axios';
 import "../../../src/Popup.css";
 
 const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
+  const navigate = useNavigate(); // Initialize useNavigate hook
   const [updatedReview, setUpdatedReview] = useState({
     content: review.content,
     rating: review.rating,
@@ -18,7 +20,10 @@ const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
     try {
       await axios.put(`https://capstone-backend-1-1cia.onrender.com/api/reviews/${review.id}`, updatedReview);
       onClose();
-      onEditSubmit();  
+      onEditSubmit();
+      
+      // Redirect to the game page after saving the review
+      navigate(`/game/${review.gameId}`); // assuming you want to navigate to the game's detail page
     } catch (error) {
       console.error('Error editing review:', error);
     }
@@ -26,35 +31,34 @@ const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
 
   return (
     <div className="popup-overlay edit-review-popup">
-    <form onSubmit={handleSubmit} className="popup-container">
-      <h2>Edit Review</h2>
-      <textarea
-        name="content"
-        value={updatedReview.content}
-        onChange={handleChange}
-        placeholder="Your review"
-        required
-      />
-      <select
-        name="rating"
-        value={updatedReview.rating}
-        onChange={handleChange}
-      >
-        {[1, 2, 3, 4, 5].map((num) => (
-          <option key={num} value={num}>{num} / 5</option>
-        ))}
-      </select>
-      <div className="flex justify-end space-x-2">
-        <button type="button" onClick={onClose} className="cancel-btn">
-          Cancel
-        </button>
-        <button type="submit" className="save-btn">
-          Save Changes
-        </button>
-      </div>
-    </form>
-  </div>
-  
+      <form onSubmit={handleSubmit} className="popup-container">
+        <h2>Edit Review</h2>
+        <textarea
+          name="content"
+          value={updatedReview.content}
+          onChange={handleChange}
+          placeholder="Your review"
+          required
+        />
+        <select
+          name="rating"
+          value={updatedReview.rating}
+          onChange={handleChange}
+        >
+          {[1, 2, 3, 4, 5].map((num) => (
+            <option key={num} value={num}>{num} / 5</option>
+          ))}
+        </select>
+        <div className="flex justify-end space-x-2">
+          <button type="button" onClick={onClose} className="cancel-btn">
+            Cancel
+          </button>
+          <button type="submit" className="save-btn">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

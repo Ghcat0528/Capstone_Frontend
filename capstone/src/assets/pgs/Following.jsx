@@ -1,11 +1,11 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom'; 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const FollowingPage = () => {
   const { userId } = useParams(); 
   const [following, setFollowing] = useState([]);
-  const navigate = useNavigate();
+  const navigate = useNavigate();  // useNavigate hook
 
   useEffect(() => {
     const fetchFollowing = async () => {
@@ -28,7 +28,7 @@ const FollowingPage = () => {
 
   return (
     <div>
-       <button onClick={() => navigate(-1)}>🔙 Back</button>  
+      <button onClick={() => navigate(-1)}>🔙 Back</button>  {/* Button to go back */}
       <h2>Following</h2>
       {following.length > 0 ? (
         <ul>

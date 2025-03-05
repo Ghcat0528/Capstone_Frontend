@@ -38,13 +38,11 @@ const Auth = () => {
         localStorage.setItem("token", data.token);
         alert("Login successful!");
         
-        // Navigate to the home page after login
         navigate('/');
       } else {
         alert("Signup successful!");
         
-        // Redirect to the login page after successful registration
-        navigate('/login');
+        navigate('/');
       }
     } catch (error) {
       if (error.response) {

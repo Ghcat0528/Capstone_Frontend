@@ -14,7 +14,7 @@ const ReviewPopup = ({ gameId, onClose }) => {
     const token = localStorage.getItem("token");
     if (!token) {
       alert("You must be logged in to create a review");
-      navigate("/login"); // Redirect to login if not logged in
+      navigate("/login"); 
       return;
     }
 
@@ -31,7 +31,7 @@ const ReviewPopup = ({ gameId, onClose }) => {
       );
       alert("Review submitted!");
       onClose(); 
-      navigate(0); // Refreshes the page to show the new review
+      navigate('/'); 
     } catch (error) {
       console.error("Error submitting review:", error.response?.data || error.message);
       alert(error.response?.data?.message || "Failed to submit review.");

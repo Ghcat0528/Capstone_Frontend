@@ -1,37 +1,47 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importing useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import "../../../src/Popup.css";
 
 const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
-  const navigate = useNavigate(); // Initialize useNavigate hook
-  const [updatedReview, setUpdatedReview] = useState({
-    content: review.content,
-    rating: review.rating,
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUpdatedReview((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-        await axios.put(
-          `https://capstone-backend-1-1cia.onrender.com/api/reviews/${review.id}`,
-          updatedReview,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, 
-            },
-          }
-        );
-        onClose();
-        onEditSubmit();
-      } catch (error) {
-        console.error('Error editing review:', error);
+    const navigate = useNavigate(); 
+    const [updatedReview, setUpdatedReview] = useState({
+      content: review.content,
+      rating: review.rating,
+    });
+  
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setUpdatedReview((prev) => ({ ...prev, [name]: value }));
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      const token = localStorage.getItem('authToken'); 
+  
+      if (!token) {
+        console.log("User is not authenticated");
+        return;
       }
+  
+      try {
+          await axios.put(
+            `https://capstone-backend-1-1cia.onrender.com/api/reviews/${review.id}`,
+            updatedReview,
+            {
+              headers: {
+                  'Authorization': `Bearer ${token}`  
+                }
+            }
+          );
+          onClose();
+          onEditSubmit();
+        } catch (error) {
+          console.error('Error editing review:', error);
+        }
+    };
+  
 
   return (
     <div className="popup-overlay edit-review-popup">
@@ -65,6 +75,6 @@ const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
     </div>
   );
 };
-};
+
 
 export default EditReviewPopup;

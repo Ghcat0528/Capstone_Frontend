@@ -22,8 +22,6 @@ const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
       onClose();
       onEditSubmit();
       
-      // Redirect to the game page after saving the review
-      navigate(`/game/${review.gameId}`); // assuming you want to navigate to the game's detail page
     } catch (error) {
       console.error('Error editing review:', error);
     }

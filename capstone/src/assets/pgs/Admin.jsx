@@ -28,16 +28,16 @@ const AdminDashboard = () => {
         }
 
         const [dashboardRes, usersRes, gamesRes, reviewsRes] = await Promise.all([
-          axios.get("http://localhost:3808/api/admin/dashboard", {
+          axios.get("https://capstone-backend-1-1cia.onrender.com/api/admin/dashboard", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:3808/api/admin/users", {
+          axios.get("https://capstone-backend-1-1cia.onrender.com/api/admin/users", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:3808/api/admin/games", {
+          axios.get("https://capstone-backend-1-1cia.onrender.com/api/admin/games", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:3808/api/admin/reviews", {
+          axios.get("https://capstone-backend-1-1cia.onrender.com/api/admin/reviews", {
             headers: { Authorization: `Bearer ${token}` },
           }),
           
@@ -72,7 +72,7 @@ const AdminDashboard = () => {
     if (newGame.title.trim() && newGame.genre.trim()) {
       try {
         const res = await axios.post(
-          "http://localhost:3808/api/admin/games",
+          "https://capstone-backend-1-1cia.onrender.com/api/admin/games",
           newGame,
           {
             headers: { Authorization: `Bearer ${token}` },

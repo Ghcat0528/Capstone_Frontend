@@ -17,7 +17,7 @@ const GameDetailsPage = () => {
   useEffect(() => {
     const getGameData = async () => {
       try {
-        const res = await axios.get(`http://localhost:3808/api/reviews/games/${gameId}`);
+        const res = await axios.get(`https://capstone-backend-1-1cia.onrender.com/api/reviews/games/${gameId}`);
         setGame(res.data);
       } catch (error) {
         console.error(error);
@@ -28,7 +28,7 @@ const GameDetailsPage = () => {
       try {
         const token = localStorage.getItem('token');  
     
-        const res = await axios.get('http://localhost:3808/api/users/profile', {
+        const res = await axios.get('https://capstone-backend-1-1cia.onrender.com/api/users/profile', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -50,7 +50,7 @@ const GameDetailsPage = () => {
 
   const refreshGameData = async () => {
     try {
-      const res = await axios.get(`http://localhost:3808/api/reviews/games/${gameId}`);
+      const res = await axios.get(`https://capstone-backend-1-1cia.onrender.com/api/reviews/games/${gameId}`);
       setGame(res.data);
     } catch (error) {
       console.error(error);

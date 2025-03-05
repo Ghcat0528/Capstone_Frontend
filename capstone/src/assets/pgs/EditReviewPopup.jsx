@@ -16,7 +16,7 @@ const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3808/api/reviews/${review.id}`, updatedReview);
+      await axios.put(`https://capstone-backend-1-1cia.onrender.com/api/reviews/${review.id}`, updatedReview);
       onClose();
       onEditSubmit();  
     } catch (error) {

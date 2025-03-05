@@ -11,7 +11,7 @@ const FollowersPage = () => {
     const fetchFollowers = async () => {
         try {
           const token = localStorage.getItem('token');  
-          const response = await axios.get(`http://localhost:3808/api/users/${userId}/followers`, {
+          const response = await axios.get(`https://capstone-backend-1-1cia.onrender.com/api/users/${userId}/followers`, {
             headers: {
               'Authorization': `Bearer ${token}`  
             }

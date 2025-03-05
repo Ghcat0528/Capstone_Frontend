@@ -12,7 +12,7 @@ const FollowingPage = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          `http://localhost:3808/api/users/${userId}/following`, 
+          `https://capstone-backend-1-1cia.onrender.com/api/users/${userId}/following`, 
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setFollowing(res.data.following);

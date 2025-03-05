@@ -17,7 +17,7 @@ const UserPage = () => {
         const token = localStorage.getItem("token");
         if (!token) return console.error("No token found.");
 
-        const res = await axios.get(`http://localhost:3808/api/users/${userId}/profile`, {
+        const res = await axios.get(`https://capstone-backend-1-1cia.onrender.com/api/users/${userId}/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -40,7 +40,7 @@ const UserPage = () => {
       if (!token || !loggedInUserId) return;
   
       try {
-        const res = await axios.get(`http://localhost:3808/api/users/${userId}/isFollowing`, {
+        const res = await axios.get(`https://capstone-backend-1-1cia.onrender.com/api/users/${userId}/isFollowing`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setIsFollowing(res.data.isFollowing);
@@ -58,14 +58,14 @@ const UserPage = () => {
       if (!token) return;
   
       await axios.post(
-        `http://localhost:3808/api/users/follow/${userId}`,
+        `https://capstone-backend-1-1cia.onrender.com/api/users/follow/${userId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
   
       setIsFollowing(true);
   
-      const res = await axios.get(`http://localhost:3808/api/users/${userId}/profile`, {
+      const res = await axios.get(`https://capstone-backend-1-1cia.onrender.com/api/users/${userId}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(res.data); 
@@ -80,14 +80,14 @@ const UserPage = () => {
       if (!token) return;
   
       await axios.delete(
-        `http://localhost:3808/api/users/unfollow/${userId}`,
+        `https://capstone-backend-1-1cia.onrender.com/api/users/unfollow/${userId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
   
       setIsFollowing(false);
   
     
-      const res = await axios.get(`http://localhost:3808/api/users/${userId}/profile`, {
+      const res = await axios.get(`https://capstone-backend-1-1cia.onrender.com/api/users/${userId}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(res.data); 

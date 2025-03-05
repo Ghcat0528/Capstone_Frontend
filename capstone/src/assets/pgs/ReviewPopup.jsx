@@ -18,7 +18,7 @@ const ReviewPopup = ({ gameId, onClose }) => {
   
     try {
       await axios.post(
-        "http://localhost:3808/api/reviews",
+        "https://capstone-backend-1-1cia.onrender.com/api/reviews",
         { rating: Number(rating), content, gameId },
         {
           headers: {

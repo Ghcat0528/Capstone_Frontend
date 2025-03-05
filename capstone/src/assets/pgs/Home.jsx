@@ -16,7 +16,7 @@ const Home = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const res = await axios.get("http://localhost:3808/api/users/profile", {
+        const res = await axios.get("https://capstone-backend-1-1cia.onrender.com/api/users/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
        

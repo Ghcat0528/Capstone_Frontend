@@ -24,7 +24,7 @@ const MyUserPage = () => {
           const token = localStorage.getItem("token");
           if (!token) return;
           
-          const res = await axios.get("http://localhost:3808/api/users/profile", {
+          const res = await axios.get("https://capstone-backend-1-1cia.onrender.com/api/users/profile", {
             headers: { Authorization: `Bearer ${token}` },
           });
     
@@ -54,7 +54,7 @@ const MyUserPage = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        `http://localhost:3808/api/users/${userId}/isFollowing`,
+        `https://capstone-backend-1-1cia.onrender.com/api/users/${userId}/isFollowing`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setIsFollowing(res.data.isFollowing);
@@ -82,7 +82,7 @@ const MyUserPage = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      await axios.put("http://localhost:3808/api/users/profile", updatedFields, {
+      await axios.put("https://capstone-backend-1-1cia.onrender.com/api/users/profile", updatedFields, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

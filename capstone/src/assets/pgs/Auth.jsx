@@ -3,7 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import '../../../src/Auth.css'
 
-
 const Auth = () => {
   const navigate = useNavigate();
   const [isLogin, setLogin] = useState(true);
@@ -13,7 +12,6 @@ const Auth = () => {
     password: "",
   });
   const [error, setError] = useState("");
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const toggleForm = () => {
     setLogin(!isLogin);
@@ -30,7 +28,7 @@ const Auth = () => {
     setError("");
   
     try {
-      const endpoint = isLogin ? `${BACKEND_URL}/api/auth/login` : `${BACKEND_URL}/api/auth/register`;
+      const endpoint = isLogin ? "https://capstone-backend-1-1cia.onrender.com/api/auth/login" : "https://capstone-backend-1-1cia.onrender.com/api/auth/register";
       const { data } = await axios.post(endpoint, formData);
   
       if (isLogin) {
@@ -40,6 +38,7 @@ const Auth = () => {
         
         navigate('/');
       } else {
+      
         alert("Signup successful!");
         window.location.reload();
       }

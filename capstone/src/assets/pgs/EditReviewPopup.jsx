@@ -18,14 +18,20 @@ const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`https://capstone-backend-1-1cia.onrender.com/api/reviews/${review.id}`, updatedReview);
-      onClose();
-      onEditSubmit();
-      
-    } catch (error) {
-      console.error('Error editing review:', error);
-    }
-  };
+        await axios.put(
+          `https://capstone-backend-1-1cia.onrender.com/api/reviews/${review.id}`,
+          updatedReview,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, 
+            },
+          }
+        );
+        onClose();
+        onEditSubmit();
+      } catch (error) {
+        console.error('Error editing review:', error);
+      }
 
   return (
     <div className="popup-overlay edit-review-popup">

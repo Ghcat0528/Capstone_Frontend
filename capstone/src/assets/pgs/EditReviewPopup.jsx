@@ -2,8 +2,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import "../../../src/Popup.css";
 
-
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
   const [updatedReview, setUpdatedReview] = useState({
     content: review.content,
@@ -18,7 +16,7 @@ const EditReviewPopup = ({ review, onClose, onEditSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`${BACKEND_URL}/api/reviews/${review.id}`, updatedReview);
+      await axios.put(`http://localhost:3808/api/reviews/${review.id}`, updatedReview);
       onClose();
       onEditSubmit();  
     } catch (error) {

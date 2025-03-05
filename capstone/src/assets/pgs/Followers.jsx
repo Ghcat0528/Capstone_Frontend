@@ -6,13 +6,12 @@ const FollowersPage = () => {
   const { userId } = useParams();  
   const [followers, setFollowers] = useState([]);
   const navigate = useNavigate();
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchFollowers = async () => {
         try {
           const token = localStorage.getItem('token');  
-          const response = await axios.get(`${BACKEND_URL}/api/users/${userId}/followers`, {
+          const response = await axios.get(`http://localhost:3808/api/users/${userId}/followers`, {
             headers: {
               'Authorization': `Bearer ${token}`  
             }

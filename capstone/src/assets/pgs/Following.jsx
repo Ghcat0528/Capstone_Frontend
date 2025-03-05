@@ -6,14 +6,13 @@ const FollowingPage = () => {
   const { userId } = useParams(); 
   const [following, setFollowing] = useState([]);
   const navigate = useNavigate();
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchFollowing = async () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          `${BACKEND_URL}/api/users/${userId}/following`, 
+          `http://localhost:3808/api/users/${userId}/following`, 
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setFollowing(res.data.following);

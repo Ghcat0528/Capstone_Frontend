@@ -15,7 +15,6 @@ const AdminDashboard = () => {
     categories: [], 
   });
   const navigate = useNavigate();
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -29,16 +28,16 @@ const AdminDashboard = () => {
         }
 
         const [dashboardRes, usersRes, gamesRes, reviewsRes] = await Promise.all([
-          axios.get(`${BACKEND_URL}/api/admin/dashboard`, {
+          axios.get("http://localhost:3808/api/admin/dashboard", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get(`${BACKEND_URL}/api/admin/users`, {
+          axios.get("http://localhost:3808/api/admin/users", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get(`${BACKEND_URL}/api/admin/games`, {
+          axios.get("http://localhost:3808/api/admin/games", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get(`${BACKEND_URL}/api/admin/reviews`, {
+          axios.get("http://localhost:3808/api/admin/reviews", {
             headers: { Authorization: `Bearer ${token}` },
           }),
           
@@ -73,14 +72,14 @@ const AdminDashboard = () => {
     if (newGame.title.trim() && newGame.genre.trim()) {
       try {
         const res = await axios.post(
-          `${BACKEND_URL}/api/admin/games`,
+          "http://localhost:3808/api/admin/games",
           newGame,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         setGames([...games, res.data]);
-        setNewGame({ title: "", genre: "", picture: "", categories: [] }); 
+        setNewGame({ title: "", genre: "", picture: "", categories: [] }); // Reset form
         setConfirmationMessage("Game successfully added!");
       } catch (error) {
         console.error("Failed to create game:", error);
